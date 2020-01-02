@@ -1,3 +1,6 @@
+#![cfg_attr(all(windows, not(debug_assertions)), windows_subsystem = "windows")] //if on windows, and a non debug build, hide the console window
+#![cfg_attr(all(debug_assertions), allow(dead_code))] //allow dead code ONLY in debug builds
+
 use async_std::{prelude::*, task};
 use futures::channel::mpsc;
 use futures::sink::SinkExt;
@@ -51,6 +54,7 @@ async fn run_ui() {
 
     //setup our imgui drawing ccontext
     let mut imgui = Context::create();
+    imgui.set_ini_filename(None);
 
     //setup window/imgui renderer
     let title = "async-imgui";
